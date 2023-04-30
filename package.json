@@ -1,0 +1,21 @@
+{
+  "name": "discordguilder",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Build your dream Discord server effortlessly with DiscordGuilder, a witty bot that conjures up categories, channels, and roles from yaml spells!",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unitythemaker/DiscordGuilder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/unitythemaker/DiscordGuilder/issues"
+  },
+  "homepage": "https://github.com/unitythemaker/DiscordGuilder#readme"
+}
