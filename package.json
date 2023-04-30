@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/unitythemaker/DiscordGuilder/issues"
   },
-  "homepage": "https://github.com/unitythemaker/DiscordGuilder#readme"
+  "homepage": "https://github.com/unitythemaker/DiscordGuilder#readme",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  }
 }
