@@ -86,6 +86,7 @@ Forum
 
 Write your response like in this format (YAML but with start and end identifier as you can see. Do not forget to escape characters when you need. Do not add extra comments other than the needed format. Remember this is just an example so you should not copy all the things in here as they are just examples.):
 ### START OF OUTPUT ###
+```yaml
 categories:
 	- name: General
 	- name: Web Development
@@ -117,4 +118,5 @@ channels:
   - name: frontend
     description: "🌐 Chat about frontend technologies, best practices, and trends. HTML, CSS, JavaScript, and more."
     parentOf: General
+```
 ### END OF OUTPUT ###
