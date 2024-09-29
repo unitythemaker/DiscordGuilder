@@ -8,20 +8,44 @@ import { ChannelType, PermissionFlagsBits } from 'discord.js';
  */
 export const setupCategories = async (guild, categories) => {
   // const categories = {
-    // 'General': ['welcome', 'general-chat', 'introductions', 'general-voice'],
-    // 'Web Development': ['frontend', 'backend', 'databases', 'devops', 'frameworks', 'development-voice'],
-    // 'Showcase': ['moderator-showcase', 'member-showcase', 'feedback'],
-    // 'Learning & Resources': ['tutorials', 'questions', 'tools', 'forum'],
-    // 'Events & Announcements': ['announcements', 'events', 'stage-events'],
-    // 'Off-Topic': ['random', 'memes', 'off-topic-voice'],
+  // 'General': ['welcome', 'general-chat', 'introductions', 'general-voice'],
+  // 'Web Development': ['frontend', 'backend', 'databases', 'devops', 'frameworks', 'development-voice'],
+  // 'Showcase': ['moderator-showcase', 'member-showcase', 'feedback'],
+  // 'Learning & Resources': ['tutorials', 'questions', 'tools', 'forum'],
+  // 'Events & Announcements': ['announcements', 'events', 'stage-events'],
+  // 'Off-Topic': ['random', 'memes', 'off-topic-voice'],
   // };
 
-  for (const [categoryName, channels] of Object.entries(categories)) {
+  for (const { name: categoryName, requiredRole, channels } of categories) {
     const category = await guild.channels.create({ name: categoryName, type: ChannelType.GuildCategory });
 
-    for (const channelName of channels) {
+    // Set up permissions for the category if a required role is specified
+    if (requiredRole) {
+      const role = guild.roles.cache.find(r => r.name === requiredRole);
+      if (role) {
+        await category.permissionOverwrites.create(guild.roles.everyone, { ViewChannel: false });
+        await category.permissionOverwrites.create(role, { ViewChannel: true });
+      }
+    }
+
+    for (const { name: channelName, description: channelDescription } of channels) {
       const channelType = channelName.endsWith('-voice') ? ChannelType.GuildVoice : ChannelType.GuildText;
-      await guild.channels.create({ name: channelName, type: channelType, parent: category.id });
+      await guild.channels.create({
+        name: channelName,
+        topic: channelType === ChannelType.GuildText ? channelDescription : undefined,
+        type: channelType,
+        parent: category.id,
+        permissionOverwrites: requiredRole ? [
+          {
+            id: guild.roles.everyone.id,
+            deny: [PermissionFlagsBits.ViewChannel],
+          },
+          {
+            id: guild.roles.cache.find(r => r.name === requiredRole).id,
+            allow: [PermissionFlagsBits.ViewChannel],
+          }
+        ] : []
+      });
     }
   }
 };
@@ -51,4 +75,3 @@ export const setupRoles = async (guild, roles) => {
     });
   }
 };
-
